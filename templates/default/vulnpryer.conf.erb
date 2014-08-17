@@ -1,0 +1,27 @@
+[VulnDB]
+<% node['vulnpryer']['config']['vulndb'].sort.each do |key, value| %>
+<% if value %>
+<%= key %>= <%= value %>
+<% end %>
+<% end %>
+
+[RedSeal]
+<% node['vulnpryer']['config']['redseal'].sort.each do |key, value| %>
+<% if value %>
+<%= key %>= <%= value %>
+<% end %>
+<% end %>
+
+[S3]
+<% node['vulnpryer']['config']['s3'].sort.each do |key, value| %>
+<% if value %>
+<%= key %>= <%= value %>
+<% end %>
+<% end %>
+
+[Mongo]
+<% node['vulnpryer']['config']['mongo'].sort.each do |key, value| %>
+<% if value %>
+<%= key %>= <%= value %>
+<% end %>
+<% end %>
