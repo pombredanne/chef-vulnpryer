@@ -28,19 +28,36 @@ vulndb_user = node['vulnpryer']['user']
 
 user vulndb_user do
   system true
+  home node['vulnpryer']['homedir']
 end
 
-directory "/opt/vulndb" do
+directory node['vulnpryer']['homedir'] do
   owner vulndb_user
   group vulndb_user
 end
 
-git "/opt/vulndb" do
+git node['vulnpryer']['homedir'] do
   repository node['vulnpryer']['repository']
   revision node['vulnpryer']['repository_branch']
-  action :sync
+  action :checkout
   user vulndb_user
   group vulndb_user
+end
+
+if (!node['vulnpryer']['config']['s3']['aws_access_key_id'].nil? and 
+  !node['vulnpryer']['config']['s3']['aws_secret_access_key'].nil?)
+  directory "#{node['vulnpryer']['homedir']}/.aws" do
+    owner vulndb_user
+    group vulndb_user
+    mode "0750"
+  end
+  
+  template "#{node['vulnpryer']['homedir']}/.aws/credentials" do
+    source "credentials.erb"
+    owner vulndb_user
+    group vulndb_user
+    mode "0640"
+  end
 end
 
 directory node['vulnpryer']['config']['vulndb']['json_dir'] do
@@ -85,7 +102,7 @@ end
 
 my_vars = node['vulnpryer']['config']
 
-template "/opt/vulndb/vulnpryer.conf" do
+template "#{node['vulnpryer']['homedir']}/vulnpryer.conf" do
   source "vulnpryer.conf.erb"
   owner vulndb_user
   group vulndb_user

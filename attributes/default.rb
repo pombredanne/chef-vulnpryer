@@ -10,6 +10,8 @@ default['vulnpryer']['config']['vulndb']['json_dir']          = '/data/vulndb_js
 default['vulnpryer']['config']['s3']['bucket_name']           = nil
 default['vulnpryer']['config']['s3']['key']                   = nil
 default['vulnpryer']['config']['s3']['region']                = 'us-west-2'
+default['vulnpryer']['config']['s3']['aws_access_key_id']     = nil
+default['vulnpryer']['config']['s3']['aws_secret_access_key'] = nil
 
 #RedSeal settings
 default['vulnpryer']['config']['redseal']['username']           = nil
@@ -23,6 +25,7 @@ default['vulnpryer']['config']['mongo']['hostname']     = 'localhost'
 default['vulnpryer']['ebs']['size']                    = 20
 
 default['vulnpryer']['user']                           = "vulndb"
+default['vulnpryer']['homedir']                        = "/opt/vulndb"
 
 #VulnPryer repo
 default['vulnpryer']['repository']                     = 'https://github.com/davidski/vulnpryer.git'
