@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: vulnpryer
-# Recipe:: database.rb
+# Recipe:: datadrive.rb
 #
 # Copyright (C) 2014 David F. Severski
 #
