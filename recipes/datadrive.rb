@@ -69,7 +69,8 @@ if node.deep_fetch('cloud_v2', 'provider') == 'ec2'
     # no raid, so just mount and format a single volume
     aws_ebs_volume 'data_volume' do
       size node['vulnpryer']['ebs']['size']
-      device device_id.gsub('xvd', 'sd') # aws uses sdx instead of xvdx
+      device node['vulnpryer']['ebs']['device_id']
+      #device device_id.gsub('xvd', 'sd') # aws uses sdx instead of xvdx
       volume_id node['vulnpryer']['ebs']['volume_id']
       action [:attach]
     end

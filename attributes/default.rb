@@ -5,6 +5,8 @@ default['vulnpryer']['config']['vulndb']['request_token_url'] = 'https://vulndb.
 default['vulnpryer']['config']['vulndb']['page_size']         = 100
 default['vulnpryer']['config']['vulndb']['working_dir']       = '/tmp/'
 default['vulnpryer']['config']['vulndb']['json_dir']          = '/data/vulndb_json/'
+default['vulnpryer']['config']['vulndb']['environment']       = 'staging'
+
 
 #S3 settings
 default['vulnpryer']['config']['s3']['bucket_name']           = nil
@@ -23,6 +25,8 @@ default['vulnpryer']['config']['mongo']['hostname']     = 'localhost'
 
 #EC2 EBS only settings
 default['vulnpryer']['ebs']['size']                    = 20
+default['vulnpryer']['ebs']['device_id']               = '/dev/sdh'
+default['vulnpryer']['ebs']['volume_id']               = nil
 
 default['vulnpryer']['user']                           = "vulndb"
 default['vulnpryer']['homedir']                        = "/opt/vulndb"

@@ -31,4 +31,5 @@ execute "./vulnpryer.py" do
   cwd node['vulnpryer']['homedir']
   action :run
   environment ({ "HOME" => node['vulnpryer']['homedir'] })
+  only_if node['vulnpryer']['config']['vulndb']['environment'] == 'production'
 end

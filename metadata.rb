@@ -4,7 +4,7 @@ maintainer_email 'davidski@deadheaven.com'
 license          'MIT'
 description      'Installs and configures vulnpryer'
 long_description 'Installs and configures vulnpryer'
-version          '0.1.0'
+version          '0.1.1'
 
 depends 'python', ">= 1.4.6"
 depends 'aws', '>= 2.4.0'
