@@ -96,7 +96,7 @@ if node.deep_fetch('cloud_v2', 'provider') == 'ec2' || node.deep_fetch('cloud', 
     mount '/data' do
       device device_id
       fstype 'ext4'
-      options 'noatime,nobootwait'
+      options 'noatime'
       action [:enable, :mount]
     end
   end
