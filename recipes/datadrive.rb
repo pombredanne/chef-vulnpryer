@@ -38,7 +38,7 @@ directory '/data' do
   group vulndb_user
 end
  
-if node.deep_fetch('cloud_v2', 'provider') == 'ec2'
+if node.deep_fetch('cloud_v2', 'provider') == 'ec2' || node.deep_fetch('cloud', 'provider') == 'ec2'
 
   include_recipe 'aws::default'
  
