@@ -39,7 +39,7 @@ end
 git node['vulnpryer']['homedir'] do
   repository node['vulnpryer']['repository']
   revision node['vulnpryer']['repository_branch']
-  action :checkout
+  action :sync
   user vulndb_user
   group vulndb_user
 end
