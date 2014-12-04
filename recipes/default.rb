@@ -28,7 +28,7 @@ vulndb_user = node['vulnpryer']['user']
 
 user vulndb_user do
   system true
-  home node['vulnpryer']['homedir']
+  #home node['vulnpryer']['homedir']
 end
 
 directory node['vulnpryer']['homedir'] do
