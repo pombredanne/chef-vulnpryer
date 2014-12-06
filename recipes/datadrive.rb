@@ -59,7 +59,7 @@ if ec2?
     if rhel?
       devices = Dir.glob('/dev/sd?')
       devices = ['/dev/sdh'] if devices.empty?
-    else if debian?
+    elsif debian?
       devices = Dir.glob('/dev/xvd?')
       devices = ['/dev/xvdf'] if devices.empty?
     end
@@ -69,7 +69,7 @@ if ec2?
     # be attached to this device
     if rhel?
       node.set_unless['vulnpryer']['ebs']['device_id'] = "/dev/sd#{devid}"
-    else if debian?
+    elsif debian?
       node.set_unless['vulnpryer']['ebs']['device_id'] = "/dev/xvd#{devid}"
     end
  
