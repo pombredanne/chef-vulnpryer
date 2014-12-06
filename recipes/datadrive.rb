@@ -38,7 +38,7 @@ directory '/data' do
   group vulndb_user
 end
  
-if node.deep_fetch('cloud_v2', 'provider') == 'ec2' || node.deep_fetch('cloud', 'provider') == 'ec2'
+if ec2?
 
   include_recipe 'aws::default'
  
@@ -56,13 +56,22 @@ if node.deep_fetch('cloud_v2', 'provider') == 'ec2' || node.deep_fetch('cloud', 
   else
  
     # get a device id to use
-    devices = Dir.glob('/dev/xvd?')
-    devices = ['/dev/xvdf'] if devices.empty?
+    if rhel?
+      devices = Dir.glob('/dev/sd?')
+      devices = ['/dev/sdh'] if devices.empty?
+    else if debian?
+      devices = Dir.glob('/dev/xvd?')
+      devices = ['/dev/xvdf'] if devices.empty?
+    end
     devid = devices.sort.last[-1,1].succ
  
     # save the device used for data_volume on this node -- this volume will now always
     # be attached to this device
-    node.set_unless['vulnpryer']['ebs']['device_id'] = "/dev/xvd#{devid}"
+    if rhel?
+      node.set_unless['vulnpryer']['ebs']['device_id'] = "/dev/sd#{devid}"
+    else if debian?
+      node.set_unless['vulnpryer']['ebs']['device_id'] = "/dev/xvd#{devid}"
+    end
  
     device_id = node['vulnpryer']['ebs']['device_id']
  
@@ -70,7 +79,6 @@ if node.deep_fetch('cloud_v2', 'provider') == 'ec2' || node.deep_fetch('cloud', 
     aws_ebs_volume 'data_volume' do
       size node['vulnpryer']['ebs']['size']
       device node['vulnpryer']['ebs']['device_id']
-      #device device_id.gsub('xvd', 'sd') # aws uses sdx instead of xvdx
       volume_id node['vulnpryer']['ebs']['volume_id']
       action [:attach]
     end
