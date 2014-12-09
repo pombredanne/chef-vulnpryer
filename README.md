@@ -9,6 +9,7 @@ Deploys the VulnPryer suite.
 - Ubuntu-12
 - Ubuntu-14
 - CentOS
+- Amazon Linux
 
 ## Attributes
 
@@ -20,26 +21,36 @@ Deploys the VulnPryer suite.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['vulnpryer']['tofu']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include tofu</td>
-    <td><tt>true</tt></td>
+    <td><tt>['vulnpryer']['config']['s3']['aws_access_key_id']</tt></td>
+    <td>String</td>
+    <td>AWS Access Key to Post to S3 (will use IAM role creds if nil)</td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['vulnpryer']['config']['s3']['aws_secret_access_key_id']</tt></td>
+    <td>String</td>
+    <td>AWS Secret Key to Post to S3 (will use IAM role creds if nil)</td>
+    <td><tt>nil</tt></td>
   </tr>
 </table>
 
 ## Usage
 
-### vulnpryer::datadir
+### vulnpryer::datadrive
 
 Include `vulnpryer` in your node's `run_list`:
 
 ```json
 {
   "run_list": [
-    "recipe[vulnpryer::datadir]"
+    "recipe[vulnpryer::datadrive]"
   ]
 }
 ```
+- Creates data path for Mongo instance
+- Mounts EBS volume to data location
+
+
 ### vulnpryer::default
 
 Include `vulnpryer` in your node's `run_list`:
@@ -51,6 +62,38 @@ Include `vulnpryer` in your node's `run_list`:
   ]
 }
 ```
+
+- Creates VulnDB user and group
+- Creates AWS credential file if specified (defaults to IAM role if nil)
+- Installs python dependencies
+- Installs vulnpryer tool chain
+- Configures vulnpryer configuration file
+
+### vulnpryer::run_immediate
+
+Immediately run the vulnpryer.py wrapper script.
+
+```json
+{
+  "run_list": [
+    "recipe[vulnpryer::default]"
+  ]
+}
+
+### vulnpryer::schedule
+
+Include `vulnpryer` in your node's `run_list`:
+
+```json
+{
+  "run_list": [
+    "recipe[vulnpryer::schedule]"
+  ]
+}
+```
+- Schedules daily updates from VulnDB
+- Schedules weekly TRL updates
+
 
 ## License and Authors
 
