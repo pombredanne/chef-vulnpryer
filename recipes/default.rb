@@ -28,8 +28,8 @@ vulndb_user = node['vulnpryer']['user']
 
 user vulndb_user do
   system true
-  uid 999
-  gid 999
+  uid node['vulnpryer']['uid']
+  gid node['vulnpryer']['gid']
   #home node['vulnpryer']['homedir']
 end
 
@@ -81,15 +81,28 @@ elsif platform_family?("rhel")
   end
 end
 
+virtualenv = "#{node['vulnpryer']['homedir']}/vulnpryer_ve"
+
+python_virtualenv virtualenv do
+  interpreter "python2.7"
+  owner vulndb_user
+  group vulndb_user
+  action :create
+end
+
 %w(boto restkit simplejson oauth2 lxml pymongo filechunkio).each do |pipmod|
-  python_pip pipmod
+  python_pip pipmod do
+    virtualenv virtualenv
+  done
 end
 
 #path of least resistence to get pandas installed
 if platform_family?("debian")
   package "python-pandas"
 elsif platform_family?("rhel")
-  python_pip "pandas"
+  python_pip "pandas" do
+    virtualenv virtualenv
+  done
 end
 
 #deprecated in favor of the forthcoming git publish

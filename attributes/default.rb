@@ -29,6 +29,8 @@ default['vulnpryer']['ebs']['device_id']               = '/dev/sdh'
 default['vulnpryer']['ebs']['volume_id']               = nil
 
 default['vulnpryer']['user']                           = "vulndb"
+default['vulnpryer']['gid']                            = 998
+default['vulnpryer']['uid']                            = 998
 default['vulnpryer']['homedir']                        = "/opt/vulndb"
 
 #VulnPryer repo
