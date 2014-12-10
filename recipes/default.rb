@@ -91,18 +91,14 @@ python_virtualenv virtualenv do
 end
 
 %w(boto restkit simplejson oauth2 lxml pymongo filechunkio).each do |pipmod|
-  python_pip pipmod do
-    virtualenv virtualenv
-  done
+  python_pip pipmod
 end
 
 #path of least resistence to get pandas installed
 if platform_family?("debian")
   package "python-pandas"
 elsif platform_family?("rhel")
-  python_pip "pandas" do
-    virtualenv virtualenv
-  done
+  python_pip "pandas"
 end
 
 #deprecated in favor of the forthcoming git publish
