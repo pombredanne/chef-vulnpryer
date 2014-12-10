@@ -28,6 +28,8 @@ vulndb_user = node['vulnpryer']['user']
 
 user vulndb_user do
   system true
+  uid 999
+  gid 999
   #home node['vulnpryer']['homedir']
 end
 
