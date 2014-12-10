@@ -29,7 +29,7 @@ vulndb_user = node['vulnpryer']['user']
 user vulndb_user do
   system true
   uid node['vulnpryer']['uid']
-  gid node['vulnpryer']['gid']
+  #gid node['vulnpryer']['gid']
   #home node['vulnpryer']['homedir']
 end
 
