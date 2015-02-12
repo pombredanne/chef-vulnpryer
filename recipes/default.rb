@@ -87,6 +87,7 @@ python_virtualenv virtualenv do
   interpreter "python2.7"
   owner vulndb_user
   group vulndb_user
+  options "--system-site-packages"
   action :create
 end
 
