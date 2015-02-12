@@ -69,6 +69,22 @@ Include `vulnpryer` in your node's `run_list`:
 - Installs vulnpryer tool chain
 - Configures vulnpryer configuration file
 
+### vulnpryer::mount_snapshot
+
+Create data directory for the VulnDB MongoDB and mount an EBS volume created from a static snapshot. 
+This recipe is intended to be used in place of `datadrive` for exploratory data analysis of the VulnDB 
+database instead of updating the Mongo VulnDB repository.
+
+```json
+{
+  "run_list": [
+    "recipe[vulnpryer::mount_snapshot]"
+  ]
+}
+```
+- Creates data path for Mongo instance
+- Creates an EBS volume from a snapshot and mounts it to the data location
+
 ### vulnpryer::run_immediate
 
 Immediately run the vulnpryer.py wrapper script.
