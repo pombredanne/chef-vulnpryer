@@ -80,7 +80,7 @@ if ec2?
       size node['vulnpryer']['ebs']['size']
       device node['vulnpryer']['ebs']['device_id']
       snapshot_id node['vulnpryer']['ebs']['volume_id']
-      action [:create]
+      action [:create, :attach]
     end
  
     # wait for the drive to attach, before making a filesystem
