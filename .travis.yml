@@ -1,7 +1,10 @@
 language: ruby
 gemfile:
-  - test/support/Gemfile
+- test/support/Gemfile
 rvm:
-  - 1.9.3
-  - 2.0.0
+- 1.9.3
+- 2.0.0
 script: bundle exec rake foodcritic
+notifications:
+  slack:
+    secure: aDM/GoAQ1BI/5ClYBudCoakJXM1b/Mi38i8jojcJXOYzyGdb6obr91hMqOScj/953C5WdIQTOFc39WZO1yEi4628501rZHR1td6/riz2BJDXlUUsoBOuMW4cQvoZd2/lunMcrq6aT/2a7YNW8ZD/hw/Yuii2wwsHbxRtjOPEdSw=

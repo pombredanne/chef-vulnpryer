@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/davidski/chef-vulnpryer.png)](http://travis-ci.org/davidski/chef-vulnpryer)
+[![Build Status](https://secure.travis-ci.org/SCH-CISM/chef-vulnpryer.png)](http://travis-ci.org/SCH-CISM/chef-vulnpryer)
 
 # vulnpryer-cookbook
 
