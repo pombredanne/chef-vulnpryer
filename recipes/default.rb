@@ -25,6 +25,7 @@
 #
 
 vulndb_user = node['vulnpryer']['user']
+pymongo_version = node['vulnpryer']['config']['mongo']['pymongo_version']
 
 user vulndb_user do
   system true
@@ -91,8 +92,12 @@ python_virtualenv virtualenv do
   action :create
 end
 
-%w(boto restkit simplejson oauth2 lxml pymongo filechunkio).each do |pipmod|
+%w(boto restkit simplejson oauth2 lxml filechunkio).each do |pipmod|
   python_pip pipmod
+end
+
+python_pip "pymongo" do
+  version pymongo_version
 end
 
 #path of least resistence to get pandas installed

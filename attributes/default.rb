@@ -18,10 +18,11 @@ default['vulnpryer']['config']['s3']['aws_secret_access_key'] = nil
 #RedSeal settings
 default['vulnpryer']['config']['redseal']['username']           = nil
 default['vulnpryer']['config']['redseal']['password']           = nil
-default['vulnpryer']['config']['redseal']['trl_url']   = 'https://www.redsealnetworks.com/login/trl/RedSeal_TRL_7-0-latest.gz'
+default['vulnpryer']['config']['redseal']['trl_url']   = 'https://www.redsealnetworks.com/login/trl/RedSeal_TRL_7-1-latest.gz'
 
 #Mongo settings
-default['vulnpryer']['config']['mongo']['hostname']     = 'localhost'
+default['vulnpryer']['config']['mongo']['hostname']            = 'localhost'
+default['vulnpryer']['config']['mongo']['pymongo_version']     = '2.8'
 
 #EC2 EBS only settings
 default['vulnpryer']['ebs']['size']                    = 20
