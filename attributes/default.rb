@@ -33,6 +33,7 @@ default['vulnpryer']['user']                           = "vulndb"
 default['vulnpryer']['gid']                            = 998
 default['vulnpryer']['uid']                            = 998
 default['vulnpryer']['homedir']                        = "/opt/vulndb"
+default['vulnpryer']['timeout']                        = 5400    #timeout in seconds
 
 #VulnPryer repo
 default['vulnpryer']['repository']                     = 'https://github.com/davidski/vulnpryer.git'

@@ -25,11 +25,13 @@
 #
 
 vulndb_user = node['vulnpryer']['user']
+vulnpryer_timeout = node['vulnpryer']['timeout']
 
 execute "./vulnpryer.py" do
   user vulndb_user
   cwd node['vulnpryer']['homedir']
   action :run
   environment ({ "HOME" => node['vulnpryer']['homedir'] })
+  timeout vulnpryer_timeout
   only_if { node['vulnpryer']['config']['vulndb']['environment'] == 'production' }
 end
