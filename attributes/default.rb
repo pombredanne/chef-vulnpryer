@@ -36,5 +36,5 @@ default['vulnpryer']['homedir']                        = "/opt/vulndb"
 default['vulnpryer']['timeout']                        = 5400    #timeout in seconds
 
 #VulnPryer repo
-default['vulnpryer']['repository']                     = 'https://github.com/davidski/vulnpryer.git'
+default['vulnpryer']['repository']                     = 'https://github.com/SCH-CISM/vulnpryer.git'
 default['vulnpryer']['repository_branch']              = 'master'
