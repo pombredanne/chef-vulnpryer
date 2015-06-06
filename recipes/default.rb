@@ -67,6 +67,7 @@ directory node['vulnpryer']['config']['vulndb']['json_dir'] do
   owner vulndb_user
   group vulndb_user
   mode "0775"
+  recursive true
 end
 
 include_recipe "python::default"
