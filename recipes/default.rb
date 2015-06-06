@@ -98,6 +98,7 @@ requirements_path = "#{node['vulnpryer']['homedir']}/requirements.txt"
 
 python_pip requirements_path do
    virtualenv virtualenv_path
+   options "-r"
    action :install
 end
 
