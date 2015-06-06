@@ -83,9 +83,9 @@ elsif platform_family?("rhel")
   end
 end
 
-virtualenv = "#{node['vulnpryer']['homedir']}/vulnpryer_ve"
+virtualenv_path = "#{node['vulnpryer']['homedir']}/vulnpryer_ve"
 
-python_virtualenv virtualenv do
+python_virtualenv virtualenv_path do
   interpreter "python2.7"
   owner vulndb_user
   group vulndb_user
@@ -93,10 +93,15 @@ python_virtualenv virtualenv do
   action :create
 end
 
-%w(boto restkit simplejson oauth2 lxml filechunkio).each do |pipmod|
-  python_pip pipmod
+#install all requirements
+requirements_path = "#{node['vulnpryer']['homedir']}/requirements.txt"
+
+python_pip requirements_path do
+   virtualenv virtualenv_path
+   action :install
 end
 
+#install pymongo at the system level for dev purposes
 python_pip "pymongo" do
   version pymongo_version
 end
@@ -107,16 +112,6 @@ if platform_family?("debian")
 elsif platform_family?("rhel")
   python_pip "pandas"
 end
-
-#deprecated in favor of the forthcoming git publish
-#%w(vulnpryer.py vulndb.py trl.py mongo_loader.py).each do |script|
-#  cookbook_file script do
-#    path "/opt/vulndb/#{script}"
-#    owner vulndb_user
-#    group vulndb_user
-#    mode "0755"
-#  end
-#end
 
 my_vars = node['vulnpryer']['config']
 
