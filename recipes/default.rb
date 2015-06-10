@@ -26,6 +26,10 @@
 
 vulndb_user = node['vulnpryer']['user']
 pymongo_version = node['vulnpryer']['config']['mongo']['pymongo_version']
+virtualenv_path = "#{node['vulnpryer']['homedir']}/vulnpryer_ve"
+requirements_path = "#{node['vulnpryer']['homedir']}/requirements.txt"
+my_vars = node['vulnpryer']['config']
+
 
 user vulndb_user do
   system true
@@ -83,25 +87,6 @@ elsif platform_family?("rhel")
   end
 end
 
-virtualenv_path = "#{node['vulnpryer']['homedir']}/vulnpryer_ve"
-
-python_virtualenv virtualenv_path do
-  interpreter "python2.7"
-  owner vulndb_user
-  group vulndb_user
-  options "--system-site-packages"
-  action :create
-end
-
-#install all requirements
-requirements_path = "#{node['vulnpryer']['homedir']}/requirements.txt"
-
-python_pip requirements_path do
-   virtualenv virtualenv_path
-   options "-r"
-   action :install
-end
-
 #install pymongo at the system level for dev purposes
 python_pip "pymongo" do
   version pymongo_version
@@ -114,7 +99,21 @@ elsif platform_family?("rhel")
   python_pip "pandas"
 end
 
-my_vars = node['vulnpryer']['config']
+#create our virtual environment
+python_virtualenv virtualenv_path do
+  interpreter "python2.7"
+  owner vulndb_user
+  group vulndb_user
+  options "--system-site-packages"
+  action :create
+end
+
+#install all requirements
+python_pip requirements_path do
+   virtualenv virtualenv_path
+   options "-r"
+   action :install
+end
 
 template "#{node['vulnpryer']['homedir']}/vulnpryer.conf" do
   source "vulnpryer.conf.erb"
