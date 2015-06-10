@@ -34,4 +34,7 @@ execute "./vulnpryer.py" do
   environment ({ "HOME" => node['vulnpryer']['homedir'] })
   timeout vulnpryer_timeout
   only_if { node['vulnpryer']['config']['vulndb']['environment'] == 'production' }
+  retries 4
+  retry_delay 30
+  
 end
