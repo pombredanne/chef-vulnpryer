@@ -41,9 +41,9 @@ end
 if ec2?
 
   include_recipe 'aws::default'
- 
+
   if node['vulnpryer']['ebs']['raid']
- 
+
     aws_ebs_raid 'data_volume_raid' do
       mount_point '/data'
       disk_count 2
@@ -52,9 +52,9 @@ if ec2?
       filesystem 'ext4'
       action :auto_attach
     end
- 
+
   else
- 
+
     # get a device id to use
     if rhel?
       devices = Dir.glob('/dev/sd?')
@@ -63,7 +63,7 @@ if ec2?
       devices = Dir.glob('/dev/xvd?')
       devices = ['/dev/xvdf'] if devices.empty?
     end
-    devid = devices.sort.last[-1,1].succ
+    devid = devices.sort.last[-1, 1].succ
  
     # save the device used for data_volume on this node -- this volume will now always
     # be attached to this device
@@ -72,9 +72,9 @@ if ec2?
     elsif debian?
       node.set_unless['vulnpryer']['ebs']['device_id'] = "/dev/xvd#{devid}"
     end
- 
+
     device_id = node['vulnpryer']['ebs']['device_id']
- 
+
     # no raid, so just mount and format a single volume
     aws_ebs_volume 'data_volume' do
       size node['vulnpryer']['ebs']['size']
@@ -82,9 +82,9 @@ if ec2?
       snapshot_id node['vulnpryer']['ebs']['volume_id']
       action [:create, :attach]
     end
- 
+
     # wait for the drive to attach, before making a filesystem
-    ruby_block "sleeping_data_volume" do
+    ruby_block 'sleeping_data_volume' do
       block do
         timeout = 0
         until File.blockdev?(device_id) || timeout == 1000
@@ -94,7 +94,7 @@ if ec2?
         end
       end
     end
- 
+
     # create a filesystem
     execute 'mkfs' do
       command "mkfs -t ext4 #{device_id}"
