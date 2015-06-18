@@ -1,9 +1,9 @@
 #!/usr/bin/env rake
 
-desc "Runs foodcritic linter"
+desc 'Runs foodcritic linter'
 task :foodcritic do
-  if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
-    sandbox = File.join(File.dirname(__FILE__), %w{tmp foodcritic cookbook})
+  if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
+    sandbox = File.join(File.dirname(__FILE__), %w( tmp foodcritic cookbook ))
     prepare_foodcritic_sandbox(sandbox)
 
     sh "foodcritic --epic-fail any #{File.dirname(sandbox)}"
@@ -12,13 +12,28 @@ task :foodcritic do
   end
 end
 
-task :default => 'foodcritic'
+desc 'Runs rubocop linter'
+task :rubocop do
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+end
+
+task default: 'foodcritic'
+task default: 'rubocop'
 
 private
 
 def prepare_foodcritic_sandbox(sandbox)
-  files = %w{*.md *.rb attributes definitions files libraries providers
-recipes resources templates}
+  files = %w( *.md
+              *.rb
+              attributes
+              definitions
+              files
+              libraries
+              providers
+              recipes
+              resources
+              templates )
 
   rm_rf sandbox
   mkdir_p sandbox

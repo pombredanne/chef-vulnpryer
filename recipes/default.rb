@@ -30,8 +30,8 @@ pymongo_version = node['vulnpryer']['config']['mongo']['pymongo_version']
 user vulndb_user do
   system true
   uid node['vulnpryer']['uid']
-  #gid node['vulnpryer']['gid']
-  #home node['vulnpryer']['homedir']
+  # gid node['vulnpryer']['gid']
+  # home node['vulnpryer']['homedir']
 end
 
 directory node['vulnpryer']['homedir'] do
@@ -47,37 +47,37 @@ git node['vulnpryer']['homedir'] do
   group vulndb_user
 end
 
-if (!node['vulnpryer']['config']['s3']['aws_access_key_id'].nil? and 
-  !node['vulnpryer']['config']['s3']['aws_secret_access_key'].nil?)
+if !node['vulnpryer']['config']['s3']['aws_access_key_id'].nil? &&
+   !node['vulnpryer']['config']['s3']['aws_secret_access_key'].nil?
   directory "#{node['vulnpryer']['homedir']}/.aws" do
     owner vulndb_user
     group vulndb_user
-    mode "0750"
+    mode '0750'
   end
-  
+
   template "#{node['vulnpryer']['homedir']}/.aws/credentials" do
-    source "credentials.erb"
+    source 'credentials.erb'
     owner vulndb_user
     group vulndb_user
-    mode "0640"
+    mode '0640'
   end
 end
 
 directory node['vulnpryer']['config']['vulndb']['json_dir'] do
   owner vulndb_user
   group vulndb_user
-  mode "0775"
+  mode '0775'
   recursive true
 end
 
-include_recipe "python::default"
+include_recipe 'python::default'
 
-#platform specific bits required for pip builds to run
-if platform_family?("debian")
+# platform specific bits required for pip builds to run
+if platform_family?('debian')
   %w(libxml2-dev libxslt1-dev python-dev zlib1g-dev).each do |pkg|
     package pkg
   end
-elsif platform_family?("rhel")
+elsif platform_family?('rhel')
   %w(libxslt-devel).each do |pkg|
     package pkg
   end
@@ -86,10 +86,10 @@ end
 virtualenv = "#{node['vulnpryer']['homedir']}/vulnpryer_ve"
 
 python_virtualenv virtualenv do
-  interpreter "python2.7"
+  interpreter 'python2.7'
   owner vulndb_user
   group vulndb_user
-  options "--system-site-packages"
+  options '--system-site-packages'
   action :create
 end
 
@@ -97,32 +97,32 @@ end
   python_pip pipmod
 end
 
-python_pip "pymongo" do
+python_pip 'pymongo' do
   version pymongo_version
 end
 
-#path of least resistence to get pandas installed
-if platform_family?("debian")
-  package "python-pandas"
-elsif platform_family?("rhel")
-  python_pip "pandas"
+# path of least resistence to get pandas installed
+if platform_family?('debian')
+  package 'python-pandas'
+elsif platform_family?('rhel')
+  python_pip 'pandas'
 end
 
-#deprecated in favor of the forthcoming git publish
-#%w(vulnpryer.py vulndb.py trl.py mongo_loader.py).each do |script|
-#  cookbook_file script do
-#    path "/opt/vulndb/#{script}"
-#    owner vulndb_user
-#    group vulndb_user
-#    mode "0755"
-#  end
-#end
+# deprecated in favor of the forthcoming git publish
+# %w(vulnpryer.py vulndb.py trl.py mongo_loader.py).each do |script|
+#   cookbook_file script do
+#     path "/opt/vulndb/#{script}"
+#     owner vulndb_user
+#     group vulndb_user
+#     mode "0755"
+#   end
+# end
 
-my_vars = node['vulnpryer']['config']
+# my_vars = node['vulnpryer']['config']
 
 template "#{node['vulnpryer']['homedir']}/vulnpryer.conf" do
-  source "vulnpryer.conf.erb"
+  source 'vulnpryer.conf.erb'
   owner vulndb_user
   group vulndb_user
-  mode "0664"
+  mode '0664'
 end

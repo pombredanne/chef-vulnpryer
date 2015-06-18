@@ -37,7 +37,7 @@ directory '/data' do
   owner vulndb_user
   group vulndb_user
 end
- 
+
 if ec2?
 
   include_recipe 'aws::default'
@@ -64,7 +64,7 @@ if ec2?
       devices = ['/dev/xvdf'] if devices.empty?
     end
     devid = devices.sort.last[-1, 1].succ
- 
+
     # save the device used for data_volume on this node -- this volume will now always
     # be attached to this device
     if rhel?
