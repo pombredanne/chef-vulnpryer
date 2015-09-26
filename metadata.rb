@@ -13,5 +13,5 @@ supports         'centos'
 
 depends 'python', '>= 1.4.6'
 depends 'aws', '>= 2.4.0'
-depends 'chef-sugar', '>= 2.0.0'
+depends 'chef-sugar', '>= 3.1.1'
 depends 'cron', '>= 1.4.0'
