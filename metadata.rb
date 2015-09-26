@@ -4,6 +4,8 @@ maintainer_email 'davidski@deadheaven.com'
 license          'MIT'
 description      'Installs and configures vulnpryer'
 long_description 'Installs and configures vulnpryer'
+source_url       'https://github.com/SCH-CISM/chef-vulnpryer' if respond_to?(:source_url)
+issues_url       'https://github.com/SCH-CISM/chef-vulnpryer/issues' if respond_to?(:issues_url)
 version          '0.1.2'
 
 supports         'ubuntu'
