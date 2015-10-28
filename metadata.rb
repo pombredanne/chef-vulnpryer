@@ -6,7 +6,7 @@ description      'Installs and configures vulnpryer'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url       'https://github.com/SCH-CISM/chef-vulnpryer' if respond_to?(:source_url)
 issues_url       'https://github.com/SCH-CISM/chef-vulnpryer/issues' if respond_to?(:issues_url)
-version          '0.1.3'
+version          '0.1.4'
 
 supports         'ubuntu'
 supports         'amazon'
