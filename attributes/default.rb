@@ -33,6 +33,8 @@ default['vulnpryer']['gid']                            = 998
 default['vulnpryer']['uid']                            = 998
 default['vulnpryer']['homedir']                        = '/opt/vulndb'
 default['vulnpryer']['timeout']                        = 5400    # timeout in seconds
+default['vulnpryer']['retry_delay']                    = 30 # time to wait between retry attempts
+default['vulnpryer']['retries']                        = 0
 
 # VulnPryer repo
 default['vulnpryer']['repository']                     = 'https://github.com/SCH-CISM/vulnpryer.git'

@@ -26,6 +26,8 @@
 
 vulndb_user = node['vulnpryer']['user']
 vulnpryer_timeout = node['vulnpryer']['timeout']
+retry_count = node['vulnpryer']['retries']
+retry_interval = node['vulnpryer']['retry_delay']
 
 execute './vulnpryer.py' do
   user vulndb_user
@@ -34,6 +36,6 @@ execute './vulnpryer.py' do
   environment 'HOME' => node['vulnpryer']['homedir']
   timeout vulnpryer_timeout
   only_if { node['vulnpryer']['config']['vulndb']['environment'] == 'production' }
-  retries 4
-  retry_delay 30
+  retries retry_count
+  retry_delay retry_interval
 end
