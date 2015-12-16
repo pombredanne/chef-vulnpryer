@@ -17,7 +17,7 @@ default['vulnpryer']['config']['s3']['aws_secret_access_key'] = nil
 # RedSeal settings
 default['vulnpryer']['config']['redseal']['username']           = nil
 default['vulnpryer']['config']['redseal']['password']           = nil
-default['vulnpryer']['config']['redseal']['trl_url']   = 'https://www.redsealnetworks.com/login/trl/RedSeal_TRL_7-1-latest.gz'
+default['vulnpryer']['config']['redseal']['trl_url']            = 'https://www.redsealnetworks.com/login/trl/RedSeal_TRL_7-1-latest.gz'
 
 # Mongo settings
 default['vulnpryer']['config']['mongo']['hostname']            = 'localhost'
@@ -32,7 +32,7 @@ default['vulnpryer']['user']                           = 'vulndb'
 default['vulnpryer']['gid']                            = 998
 default['vulnpryer']['uid']                            = 998
 default['vulnpryer']['homedir']                        = '/opt/vulndb'
-default['vulnpryer']['timeout']                        = 5400    # timeout in seconds
+default['vulnpryer']['timeout']                        = 5400 # timeout in seconds
 default['vulnpryer']['retry_delay']                    = 30 # time to wait between retry attempts
 default['vulnpryer']['retries']                        = 0
 
