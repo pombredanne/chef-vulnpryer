@@ -27,6 +27,10 @@
 vulndb_user = node['vulnpryer']['user']
 pymongo_version = node['vulnpryer']['config']['mongo']['pymongo_version']
 
+# Set default umask to fix opsworks issue
+# ref: https://forums.aws.amazon.com/thread.jspa?threadID=221317&tstart=0
+File.umask 0002
+
 user vulndb_user do
   system true
   uid node['vulnpryer']['uid']
