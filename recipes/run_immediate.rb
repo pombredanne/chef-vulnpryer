@@ -25,7 +25,7 @@
 #
 
 vulndb_user = node['vulnpryer']['user']
-vulnpryer_timeout = node['vulnpryer']['timeout']
+vulnpryer_timeout = node['vulnpryer']['timeout'].to_i
 retry_count = node['vulnpryer']['retries']
 retry_interval = node['vulnpryer']['retry_delay']
 
