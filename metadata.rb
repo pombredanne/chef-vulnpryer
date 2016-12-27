@@ -12,6 +12,7 @@ supports         'ubuntu'
 supports         'amazon'
 supports         'redhat'
 supports         'centos'
+supports         'debian'
 
 depends 'python', '>= 1.4.6'
 depends 'aws', '>= 2.4.0'
