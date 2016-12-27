@@ -7,4 +7,4 @@ rvm:
 script: bundle exec rake foodcritic
 notifications:
   slack:
-    secure: aDM/GoAQ1BI/5ClYBudCoakJXM1b/Mi38i8jojcJXOYzyGdb6obr91hMqOScj/953C5WdIQTOFc39WZO1yEi4628501rZHR1td6/riz2BJDXlUUsoBOuMW4cQvoZd2/lunMcrq6aT/2a7YNW8ZD/hw/Yuii2wwsHbxRtjOPEdSw=
+    secure: "mAcW8n7wTWCLywdLWe64gkLCpuwVi2ux0Ihc9EK/5QPsXe+svRTfzB3jlJXpqm6HYxpeyJIJQvDQBGir6FMuKNa9+wLZpkJ+44URJq52HhCYhrJR9vpme95sUzt1vnNmfyzvKLhML3isEDIEnNoEUK4NS+E+KZmLqp8a8XVuhd4="
