@@ -1,8 +1,8 @@
-source 'https://supermarket.getchef.com'
+source 'https://supermarket.chef.io'
 
 metadata
 cookbook 'apt'
 cookbook 'build-essential'
-cookbook 'sch-mongodb', github: 'SCH-CISM/cookbooks', rel: 'sch-mongodb'
+cookbook 'sch-mongodb', github: 'SCH-CISM/sch-mongodb'
 cookbook 'git'
 cookbook 'cron'
