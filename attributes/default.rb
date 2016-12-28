@@ -37,5 +37,5 @@ default['vulnpryer']['retry_delay']                    = 30 # time to wait betwe
 default['vulnpryer']['retries']                        = 0
 
 # VulnPryer repo
-default['vulnpryer']['repository']                     = 'https://github.com/SCH-CISM/vulnpryer.git'
+default['vulnpryer']['repository']                     = 'https://github.com/davidski/vulnpryer.git'
 default['vulnpryer']['repository_branch']              = 'master'
