@@ -1,3 +1,6 @@
+# Python setting
+default['vulnpryer']['python_version'] = nil
+
 # VulnDB settings
 default['vulnpryer']['config']['vulndb']['consumer_key']      = nil
 default['vulnpryer']['config']['vulndb']['consumer_secret']   = nil
@@ -28,10 +31,10 @@ default['vulnpryer']['ebs']['size']                    = 20
 default['vulnpryer']['ebs']['device_id']               = '/dev/sdh'
 default['vulnpryer']['ebs']['volume_id']               = nil
 
-default['vulnpryer']['user']                           = 'vulndb'
-default['vulnpryer']['gid']                            = 998
-default['vulnpryer']['uid']                            = 998
-default['vulnpryer']['homedir']                        = '/opt/vulndb'
+default['vulnpryer']['user']                           = 'vulnpryer'
+default['vulnpryer']['gid']                            = nil
+default['vulnpryer']['uid']                            = nil
+default['vulnpryer']['homedir']                        = '/opt/vulnpryer'
 default['vulnpryer']['timeout']                        = 5400 # timeout in seconds
 default['vulnpryer']['retry_delay']                    = 30 # time to wait between retry attempts
 default['vulnpryer']['retries']                        = 0
@@ -39,3 +42,6 @@ default['vulnpryer']['retries']                        = 0
 # VulnPryer repo
 default['vulnpryer']['repository']                     = 'https://github.com/davidski/vulnpryer.git'
 default['vulnpryer']['repository_branch']              = 'master'
+default['vulnpryer']['pip_install_options']            = '--extra-index-url https://testpypi.python.org/simple'
+default['vulnpryer']['pip_list_options']               = '--extra-index-url https://testpypi.python.org/simple'
+default['vulnpryer']['pip_options']                    = nil

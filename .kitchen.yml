@@ -9,15 +9,26 @@ platforms:
   - name: ubuntu-16.04
   - name: ubuntu-14.04
   - name: centos-7.3
+    attributes:
   - name: debian-8.6
+    attributes:
+  - name: windows-2012r2
+    driver_config:
+      box: opentable/win-2012r2-standard-amd64-nocm
+      linked_clone: true
+      customize:
+        memory: 2048
+    transport:
+      name: winrm
 
 suites:
   - name: default
     run_list:
       - "recipe[apt::default]"
       - "recipe[build-essential::default]"
-      - "recipe[git::default]"
       - "recipe[vulnpryer::default]"
+    excludes:
+      - windows-2012r2
     attributes:
       vulnpryer:
         config:
@@ -27,3 +38,17 @@ suites:
           redseal:
             username:         bar
             password:         foo
+  - name: windows
+    run_list:
+      - "recipe[vulnpryer::default]"
+    includes:
+      - windows-2012r2
+    attributes:
+      vulnpryer:
+        homedir:  c:\vulnpryer
+        config:
+          vulndb:
+            consumer_key:     bar
+            consumer_secret:  foo
+          redseal:
+            username:         bar

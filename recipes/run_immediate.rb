@@ -2,7 +2,7 @@
 # Cookbook Name:: vulnpryer
 # Recipe:: run_immediate
 #
-# Copyright (C) 2015 David F. Severski
+# Copyright (C) 2016 David F. Severski
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -29,7 +29,8 @@ vulnpryer_timeout = node['vulnpryer']['timeout'].to_i
 retry_count = node['vulnpryer']['retries']
 retry_interval = node['vulnpryer']['retry_delay']
 
-execute './vulnpryer.py' do
+execute 'vulnpryer' do
+  command 'vulnpryer daily'
   user vulndb_user
   cwd node['vulnpryer']['homedir']
   action :run

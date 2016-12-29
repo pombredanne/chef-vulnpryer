@@ -24,57 +24,66 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-vulndb_user = node['vulnpryer']['user']
-pymongo_version = node['vulnpryer']['config']['mongo']['pymongo_version']
+include_recipe 'chef-sugar::default'
 
-# Set default umask to fix opsworks issue
+vulnpryer_user = node['vulnpryer']['user']
+
+# take a user specified python version, else default to the highest known working
+# python version for the platform
+python_version = if node['vulnpryer']['python_version']
+                   node['vulnpryer']['python_version']
+                 elsif platform?('amazon')
+                   '3.5'
+                 elsif platform?('ubuntu') && platform_version.satisfies?('>=16')
+                   '3.5'
+                 elsif platform?('ubuntu') || platform?('debian')
+                   '3.4'
+                 else
+                   '2.7'
+                 end
+
+# Set default umask to fix AWS OpsWorks issue
 # ref: https://forums.aws.amazon.com/thread.jspa?threadID=221317&tstart=0
-File.umask 0002
+File.umask(0o0002)
 
-user vulndb_user do
+user vulnpryer_user do
   system true
-  uid node['vulnpryer']['uid']
+  uid node['vulnpryer']['uid'] if node['vulnpryer']['uid']
   # gid node['vulnpryer']['gid']
-  # home node['vulnpryer']['homedir']
+  home node['vulnpryer']['homedir']
 end
 
 directory node['vulnpryer']['homedir'] do
-  owner vulndb_user
-  group vulndb_user
-end
-
-git node['vulnpryer']['homedir'] do
-  repository node['vulnpryer']['repository']
-  revision node['vulnpryer']['repository_branch']
-  action :sync
-  user vulndb_user
-  group vulndb_user
+  owner vulnpryer_user
+  group vulnpryer_user
 end
 
 if !node['vulnpryer']['config']['s3']['aws_access_key_id'].nil? &&
    !node['vulnpryer']['config']['s3']['aws_secret_access_key'].nil?
   directory "#{node['vulnpryer']['homedir']}/.aws" do
-    owner vulndb_user
-    group vulndb_user
+    owner vulnpryer_user
+    group vulnpryer_user
     mode '0750'
   end
 
   template "#{node['vulnpryer']['homedir']}/.aws/credentials" do
     source 'credentials.erb'
-    owner vulndb_user
-    group vulndb_user
+    owner vulnpryer_user
+    group vulnpryer_user
     mode '0640'
   end
 end
 
 directory node['vulnpryer']['config']['vulndb']['json_dir'] do
-  owner vulndb_user
-  group vulndb_user
+  owner vulnpryer_user
+  group vulnpryer_user
   mode '0775'
   recursive true
 end
 
-include_recipe 'python::default'
+python_runtime 'vulnpryer' do
+  version python_version
+end
 
 # platform specific bits required for pip builds to run
 if platform_family?('debian')
@@ -87,46 +96,29 @@ elsif platform_family?('rhel')
   end
 end
 
+# create a venv for all our python depdencies and installs
 virtualenv = "#{node['vulnpryer']['homedir']}/vulnpryer_ve"
-
 python_virtualenv virtualenv do
-  interpreter 'python2.7'
-  owner vulndb_user
-  group vulndb_user
-  options '--system-site-packages'
+  user vulnpryer_user unless platform_family?('windows')
+  group vulnpryer_user unless platform_family?('windows')
+  system_site_packages true
   action :create
 end
 
-%w(boto restkit simplejson oauth2 lxml filechunkio).each do |pipmod|
-  python_pip pipmod
+# main install of vulnpryer package
+python_package 'VulnPryer' do
+  package_name 'VulnPryer'
+  virtualenv virtualenv
+  install_options node['vulnpryer']['pip_install_options'] if node['vulnpryer']['pip_install_options']
+  list_options node['vulnpryer']['pip_list_options'] if node['vulnpryer']['pip_list_options']
+  options node['vulnpryer']['pip_options'] if node['vulnpryer']['pip_options']
+  user vulnpryer_user unless platform_family?('windows')
+  group vulnpryer_user unless platform_family?('windows')
 end
-
-python_pip 'pymongo' do
-  version pymongo_version
-end
-
-# path of least resistence to get pandas installed
-if platform_family?('debian')
-  package 'python-pandas'
-elsif platform_family?('rhel')
-  python_pip 'pandas'
-end
-
-# deprecated in favor of the forthcoming git publish
-# %w(vulnpryer.py vulndb.py trl.py mongo_loader.py).each do |script|
-#   cookbook_file script do
-#     path "/opt/vulndb/#{script}"
-#     owner vulndb_user
-#     group vulndb_user
-#     mode "0755"
-#   end
-# end
-
-# my_vars = node['vulnpryer']['config']
 
 template "#{node['vulnpryer']['homedir']}/vulnpryer.conf" do
   source 'vulnpryer.conf.erb'
-  owner vulndb_user
-  group vulndb_user
+  owner vulnpryer_user
+  group vulnpryer_user
   mode '0664'
 end

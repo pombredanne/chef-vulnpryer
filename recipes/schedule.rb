@@ -2,7 +2,7 @@
 # Cookbook Name:: vulnpryer
 # Recipe:: schedule
 #
-# Copyright (C) 2015 David F. Severski
+# Copyright (C) 2016 David F. Severski
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -29,11 +29,5 @@ vulndb_user = node['vulnpryer']['user']
 cron_d 'vulndb_update' do
   user vulndb_user
   predefined_value '@daily'
-  command "#{node['vulnpryer']['homedir']}/vulndb.py"
-end
-
-cron_d 'trl_update' do
-  user vulndb_user
-  predefined_value '@weekly'
-  command "#{node['vulnpryer']['homedir']}/trl.py"
+  command 'vulnpryer daily'
 end

@@ -1,14 +1,14 @@
 #!/usr/bin/env rake
 
-desc 'Runs foodcritic linter'
-task :foodcritic do
-  if Gem::Version.new('1.9.2') <= Gem::Version.new(RUBY_VERSION.dup)
-    sandbox = File.join(File.dirname(__FILE__), %w( tmp foodcritic cookbook ))
+desc 'Runs cookstyle linter'
+task :cookstyle do
+  if Gem::Version.new('2.1.8') <= Gem::Version.new(RUBY_VERSION.dup)
+    sandbox = File.join(File.dirname(__FILE__), %w(tmp foodcritic cookbook))
     prepare_foodcritic_sandbox(sandbox)
 
-    sh "foodcritic --epic-fail any #{File.dirname(sandbox)}"
+    sh "cookstyle --display-cop-names --fail-level A #{File.dirname(sandbox)}"
   else
-    puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is < 1.9.2."
+    puts "WARN: cookstyle run is skipped as Ruby #{RUBY_VERSION} is < 2.1.8."
   end
 end
 
@@ -18,7 +18,7 @@ task :rubocop do
   RuboCop::RakeTask.new
 end
 
-task default: 'foodcritic'
+task default: 'cookstyle'
 task default: 'rubocop'
 
 private
