@@ -38,6 +38,8 @@ suites:
           redseal:
             username:         bar
             password:         foo
+    verifier:
+      name: inspec
   - name: windows
     run_list:
       - "recipe[vulnpryer::default]"
